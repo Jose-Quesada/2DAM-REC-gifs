@@ -14,7 +14,22 @@ export class GifsService {
   }
 
   public searchTag( tag:string ): void {
-    this._tagsHistory.unshift( tag ) ;
+    if (tag.trim().length <= 0) return;
+
+
+    this.organizeHistory( tag);
+
   }
 
+  organizeHistory( tag: string){
+    tag = tag.toLowerCase();
+
+    if (this._tagsHistory.includes(tag)){
+      this._tagsHistory = this._tagsHistory.filter ( (oldTag) => oldTag !== tag)
+    }
+
+    this._tagsHistory.unshift ( tag ) ;
+
+    this._tagsHistory = this._tagsHistory.splice(0,10);
+  }
 }
